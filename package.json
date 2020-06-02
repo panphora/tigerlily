@@ -1,0 +1,19 @@
+{
+  "name": "tigerlily",
+  "version": "0.5.0",
+  "description": "A localstorage database with events",
+  "main": "tigerlily.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/panphora/tigerlily.git"
+  },
+  "author": "panphora",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/panphora/tigerlily/issues"
+  },
+  "homepage": "https://github.com/panphora/tigerlily#readme"
+}
