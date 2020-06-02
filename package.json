@@ -2,18 +2,35 @@
   "name": "tigerlily",
   "version": "0.5.0",
   "description": "A localstorage database with events",
-  "main": "tigerlily.js",
+  "source": "src/tigerlily.js",
+  "main": "dist/tigerlily.js",
+  "module": "dist/tigerlily.module.js",
+  "unpkg": "dist/tigerlily.umd.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "http-server": "http-server -c-1",
+    "microbundle-watch": "microbundle watch",
+    "build": "microbundle",
+    "dev": "concurrently 'npm:http-server' 'npm:microbundle-watch' --kill-others"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/panphora/tigerlily.git"
   },
+  "keywords": [
+    "event",
+    "library"
+  ],
   "author": "panphora",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/panphora/tigerlily/issues"
   },
-  "homepage": "https://github.com/panphora/tigerlily#readme"
+  "homepage": "https://github.com/panphora/tigerlily#readme",
+  "devDependencies": {
+    "http-server": "^0.12.3",
+  },
+  "dependencies": {
+    "concurrently": "^5.2.0",
+    "microbundle": "^0.12.0"
+  }
 }
