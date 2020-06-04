@@ -4,15 +4,19 @@ window.localStorage.clear();
 
 const state = tigerlily('jMpHXDYguqtS', {
   defaults: {
-    // some: [],
-    // thing: {
-    //   another: 8
-    // }
+    some: [],
+    thing: {
+      another: 8
+    }
   }
 });
 
-state.on("z", ({name, value}) => {
+state.on("x", ({name, value}) => {
   console.log(123, name, value);
+});
+
+state.on(["x.y", "x.y.z"], ({name, value}) => {
+  console.log(234, name, value);
 });
 
 state.x = {};

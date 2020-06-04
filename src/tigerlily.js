@@ -26,6 +26,7 @@ db.on(["x", "num"], ({name, oldValue, newValue}) => {
 */
 
 import floodplains from "floodplains";
+import deepForEach from 'deep-for-each';
 
 export default (dbName, options = {}) => {
   if (typeof dbName !== "string") {
@@ -57,7 +58,8 @@ export default (dbName, options = {}) => {
         localStorage.setItem(dbName, JSON.stringify(rootRef));
 
         if (prop !== "on") {
-          floodplains.emit(prop, value);
+          let path = getPathOfNestedObject(rootRef, value) || prop;
+          floodplains.emit(path, {prop, path, oldValue, value});
         }
 
         return true;
@@ -71,6 +73,20 @@ export default (dbName, options = {}) => {
 
   return proxiedObject;
 
+}
+
+function getPathOfNestedObject (root, nested) {
+  if (root === nested) {
+    return "";
+  }
+
+  let objPath = "";
+  deepForEach(root, (value, key, subject, path) => {
+    if (value === nested) {
+      objPath = path;
+    }
+  });
+  return objPath;
 }
 
 
