@@ -25,6 +25,8 @@ db.on(["x", "num"], ({name, oldValue, newValue}) => {
 
 */
 
+import floodplains from "floodplains";
+
 export default (dbName, options = {}) => {
   if (typeof dbName !== "string") {
     throw new Error('tigerlily requires a database name');
@@ -50,8 +52,14 @@ export default (dbName, options = {}) => {
         }
       },
       set (obj, prop, value) {
+        let oldValue = obj[prop];
         obj[prop] = value;
         localStorage.setItem(dbName, JSON.stringify(rootRef));
+
+        if (prop !== "on") {
+          floodplains.emit(prop, value);
+        }
+
         return true;
       }
     }
@@ -59,7 +67,7 @@ export default (dbName, options = {}) => {
 
   let proxiedObject = new Proxy(state, boundHandler(state));
 
-  proxiedObject.on = function () {};
+  proxiedObject.on = floodplains.on;
 
   return proxiedObject;
 

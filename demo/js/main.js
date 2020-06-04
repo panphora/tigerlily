@@ -1,19 +1,24 @@
 import tigerlily from "../../dist/tigerlily.modern.js";
 
+window.localStorage.clear();
+
 const state = tigerlily('jMpHXDYguqtS', {
   defaults: {
-    some: [], // Doesn't override saved state
-    defaults: null
+    // some: [],
+    // thing: {
+    //   another: 8
+    // }
   }
-})
+});
 
-console.log(state.some) // []
-state.some.push('foo')
-console.log(state.some) // [ 'foo' ]
+state.on("z", ({name, value}) => {
+  console.log(123, name, value);
+});
 
 state.x = {};
 state.x.y = {};
-state.x.y.fg = 123;
+state.x.y.z = {a: 123};
+
+
 
 window.state = state;
-window.tigerlily = tigerlily;
