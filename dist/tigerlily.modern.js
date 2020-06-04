@@ -1,0 +1,2 @@
+export default(e,t={})=>{if("string"!=typeof e)throw new Error("tigerlily requires a database name");const{defaults:r={}}=t;let n=JSON.parse(localStorage.getItem(e)||"{}");n=Object.assign(r,n);let o=new Proxy(n,function t(r){return{get:(e,n)=>"object"==typeof e[n]&&null!==e[n]?new Proxy(e[n],t(r)):e[n],set:(t,n,o)=>(t[n]=o,localStorage.setItem(e,JSON.stringify(r)),!0)}}(n));return o.on=function(){},o};
+//# sourceMappingURL=tigerlily.modern.js.map

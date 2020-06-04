@@ -1,0 +1,2 @@
+module.exports=function(e,t){if(void 0===t&&(t={}),"string"!=typeof e)throw new Error("tigerlily requires a database name");var r=t.defaults,n=void 0===r?{}:r,o=JSON.parse(localStorage.getItem(e)||"{}");o=Object.assign(n,o);var i=new Proxy(o,function t(r){return{get:function(e,n){return"object"==typeof e[n]&&null!==e[n]?new Proxy(e[n],t(r)):e[n]},set:function(t,n,o){return t[n]=o,localStorage.setItem(e,JSON.stringify(r)),!0}}}(o));return i.on=function(){},i};
+//# sourceMappingURL=tigerlily.js.map
