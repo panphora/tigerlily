@@ -11,11 +11,11 @@ const state = tigerlily('jMpHXDYguqtS', {
   }
 });
 
-state.on("x", ({name, value}) => {
+tigerlily.on("x", ({name, value}) => {
   console.log(123, name, value);
 });
 
-state.on(["x.y", "x.y.z"], ({name, value}) => {
+tigerlily.on(["x.y", "x.y.z"], ({name, value}) => {
   console.log(234, name, value);
 });
 

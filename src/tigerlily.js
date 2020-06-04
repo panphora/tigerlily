@@ -28,7 +28,7 @@ db.on(["x", "num"], ({name, oldValue, newValue}) => {
 import floodplains from "floodplains";
 import deepForEach from 'deep-for-each';
 
-export default (dbName, options = {}) => {
+function tigerlily (dbName, options = {}) {
   if (typeof dbName !== "string") {
     throw new Error('tigerlily requires a database name');
   }
@@ -57,10 +57,8 @@ export default (dbName, options = {}) => {
         obj[prop] = value;
         localStorage.setItem(dbName, JSON.stringify(rootRef));
 
-        if (prop !== "on") {
-          let path = getPathOfNestedObject(rootRef, value) || prop;
-          floodplains.emit(path, {prop, path, oldValue, value});
-        }
+        let path = getPathOfNestedObject(rootRef, value) || prop;
+        floodplains.emit(path, {prop, path, oldValue, value});
 
         return true;
       }
@@ -69,11 +67,11 @@ export default (dbName, options = {}) => {
 
   let proxiedObject = new Proxy(state, boundHandler(state));
 
-  proxiedObject.on = floodplains.on;
-
   return proxiedObject;
 
 }
+
+tigerlily.on = floodplains.on;
 
 function getPathOfNestedObject (root, nested) {
   if (root === nested) {
@@ -89,5 +87,6 @@ function getPathOfNestedObject (root, nested) {
   return objPath;
 }
 
+export default tigerlily;
 
 
