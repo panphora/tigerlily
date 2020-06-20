@@ -1,7 +1,7 @@
 {
   "name": "tigerlily",
   "version": "0.5.0",
-  "description": "A localstorage database with events",
+  "description": "Mirror a JS object to localStorage",
   "source": "src/tigerlily.js",
   "main": "dist/tigerlily.js",
   "module": "dist/tigerlily.module.js",
@@ -28,11 +28,11 @@
   "homepage": "https://github.com/panphora/tigerlily#readme",
   "devDependencies": {
     "deep-for-each": "^3.0.0",
-    "floodplains": "^0.5.0",
+    "floodplains": "^0.5.3",
     "http-server": "^0.12.3"
   },
   "dependencies": {
     "concurrently": "^5.2.0",
-    "microbundle": "^0.12.0"
+    "microbundle": "^0.12.1"
   }
 }

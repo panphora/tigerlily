@@ -1,11 +1,14 @@
 /*
 
 // uses existing db if present
-let db = new tigerlily("jMpHXDYguqtS", {
+const db = tigerlily('jMpHXDYguqtS', {
   defaults: {
-    x: 123
+    some: [],
+    thing: {
+      another: 8
+    }
   }
-}); 
+});
 
 db.x = "hello";
 // page reload
@@ -14,12 +17,13 @@ db.x === "hello"; // true
 db.num = 0;
 db.num++;
 
+tigerlily.on("*", ({name, oldValue, newValue}) => {});
 
-db.on("num", ({name, oldValue, newValue}) => {
+tigerlily.on("num", ({name, oldValue, newValue}) => {
   console.log({name, oldValue, newValue});
 });
 
-db.on(["x", "num"], ({name, oldValue, newValue}) => {
+tigerlily.on(["x", "num"], ({name, oldValue, newValue}) => {
   console.log({name, oldValue, newValue});
 });
 
@@ -29,9 +33,7 @@ import floodplains from "floodplains";
 import deepForEach from 'deep-for-each';
 
 function tigerlily (dbName, options = {}) {
-  if (typeof dbName !== "string") {
-    throw new Error('tigerlily requires a database name');
-  }
+  dbName = dbName || "tigerlily";
 
   // get default options
   const { defaults = {} } = options;
@@ -84,6 +86,7 @@ function getPathOfNestedObject (root, nested) {
       objPath = path;
     }
   });
+  
   return objPath;
 }
 
