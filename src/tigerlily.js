@@ -1,7 +1,12 @@
 /*
 
-// uses existing db if present
-const db = tigerlily('jMpHXDYguqtS', {
+# Tigerlily
+Create an object that preserves its data across page loads!
+
+## Example code
+
+// will use existing data if present in localStorage, otherwise uses defaults
+const persistentObject = tigerlily('jMpHXDYguqtS', {
   defaults: {
     some: [],
     thing: {
@@ -10,12 +15,12 @@ const db = tigerlily('jMpHXDYguqtS', {
   }
 });
 
-db.x = "hello";
+persistentObject.x = "hello";
 // page reload
-db.x === "hello"; // true
+persistentObject.x === "hello"; // true
 
-db.num = 0;
-db.num++;
+persistentObject.num = 0;
+persistentObject.num++;
 
 tigerlily.on("*", ({name, oldValue, newValue}) => {});
 
