@@ -43,7 +43,6 @@ window.location.reload();
 
 // 3. the properties value is preserved 😯✅
 persistentObject.message === "hello, world!"; // true
-
 ```
 
 ## How it Works
@@ -62,22 +61,24 @@ Pass in a unique string to initialize it, so you can have multiple instances on 
 
 ```javascript
 // listen for changes to all properties
-tigerlily.on("*", ({name, oldValue, newValue}) => {
-  console.log({name, oldValue, newValue});
+tigerlily.on("*", ({prop, path, oldValue, value}) => {
+  console.log("listening to '*'", {prop, path, oldValue, value});
 });
 
-// listen for changes to the "message" property
-tigerlily.on("message", ({name, oldValue, newValue}) => {
-  console.log({name, oldValue, newValue});
+// listen for changes to the "message" prop
+tigerlily.on("message", ({prop, path, oldValue, value}) => {
+  console.log("listening to 'message'", {prop, path, oldValue, value});
 });
 
-// listen for changes to the property "username" nested under the "profile" property
-tigerlily.on("profile.username", ({name, oldValue, newValue}) => {
-  console.log({name, oldValue, newValue});
+// listen for changes to the "username" prop nested on an object that's inside the "profile" prop
+tigerlily.on("profile.username", ({prop, path, oldValue, value}) => {
+  console.log("listening to 'profile.username'", {prop, path, oldValue, value});
 });
 ```
 
 Listen for changes to your object's properties. You can listen to changes to nested properties by adding a period (i.e. `.`) between each property name.
+
+**Note:** Both `oldValue` and `value` are passed as deep copies of their values instead of by reference (if they're objects or arrays). This makes it easier to compare them.
 
 ## Inspired by
 
