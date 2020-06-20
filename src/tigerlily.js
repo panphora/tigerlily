@@ -29,8 +29,9 @@ tigerlily.on(["x", "num"], ({name, oldValue, newValue}) => {
 
 */
 
-import floodplains from "floodplains";
 import deepForEach from 'deep-for-each';
+import Floodplains from "floodplains";
+const floodplains = new Floodplains();
 
 function tigerlily (dbName, options = {}) {
   dbName = dbName || "tigerlily";
@@ -47,20 +48,23 @@ function tigerlily (dbName, options = {}) {
   function boundHandler (rootRef) {
     return {
       get (obj, prop) {
-        if (typeof obj[prop] === 'object' && obj[prop] !== null) {
-          // if nested object, wrap it in a Proxy
+        if (isObjectOrArray(obj[prop])) {
+          // if nested value is an object or array, wrap it in a Proxy
           return new Proxy(obj[prop], boundHandler(rootRef));
         } else {
           return obj[prop];
         }
       },
       set (obj, prop, value) {
-        let oldValue = obj[prop];
+        let oldValueRef = obj[prop];
+        let oldValue = isObjectOrArray(oldValueRef) ? JSON.parse(JSON.stringify(oldValueRef)) : oldValueRef;
+        let newValue = isObjectOrArray(value) ? JSON.parse(JSON.stringify(value)) : value;
+
         obj[prop] = value;
         localStorage.setItem(dbName, JSON.stringify(rootRef));
 
         let path = getPathOfNestedObject(rootRef, value) || prop;
-        floodplains.emit(path, {prop, path, oldValue, value});
+        floodplains.emit(path, {prop, path, oldValue, value: newValue});
 
         return true;
       }
@@ -73,7 +77,17 @@ function tigerlily (dbName, options = {}) {
 
 }
 
-tigerlily.on = floodplains.on;
+tigerlily.on = function (path, cb) {
+  floodplains.on(path, function (val) {
+    cb(val.value);
+  });
+}
+
+// UTILS
+
+function isObjectOrArray (val) {
+  return typeof val === 'object' && val !== null;
+}
 
 function getPathOfNestedObject (root, nested) {
   if (root === nested) {
@@ -86,7 +100,7 @@ function getPathOfNestedObject (root, nested) {
       objPath = path;
     }
   });
-  
+
   return objPath;
 }
 

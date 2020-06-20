@@ -1,28 +1,30 @@
 import tigerlily from "../../dist/tigerlily.modern.js";
 
-window.localStorage.clear();
-
-const state = tigerlily('jMpHXDYguqtS', {
+const persistentObject = tigerlily('jMpHXDYguqtS', {
   defaults: {
-    some: [],
-    thing: {
-      another: 8
+    someArray: [],
+    someData: {
+      name: "James"
     }
   }
 });
 
-tigerlily.on("x", ({name, value}) => {
-  console.log(123, name, value);
+tigerlily.on("*", ({prop, path, oldValue, value}) => {
+  console.log("listening to '*'", {prop, path, oldValue, value});
 });
 
-tigerlily.on(["x.y", "x.y.z"], ({name, value}) => {
-  console.log(234, name, value);
+tigerlily.on("message", ({prop, path, oldValue, value}) => {
+  console.log("listening to 'message'", {prop, path, oldValue, value});
 });
 
-state.x = {};
-state.x.y = {};
-state.x.y.z = {a: 123};
+tigerlily.on("profile.username", ({prop, path, oldValue, value}) => {
+  console.log("listening to 'profile.username'", {prop, path, oldValue, value});
+});
+
+persistentObject.message = "hello, world!";
+persistentObject.profile = {};
+persistentObject.profile.username = "Luke";
 
 
+window.tigerlily = tigerlily;
 
-window.state = state;
