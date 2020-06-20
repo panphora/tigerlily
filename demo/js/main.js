@@ -25,6 +25,8 @@ persistentObject.message = "hello, world!";
 persistentObject.profile = {};
 persistentObject.profile.username = "Luke";
 
+console.log("Final object (stored in localStorage):\n\n" + JSON.stringify(persistentObject, null, 4));
+
 
 window.tigerlily = tigerlily;
 

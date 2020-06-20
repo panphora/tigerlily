@@ -3,9 +3,39 @@
 <head>
   <meta charset="utf-8">
   <title>tigerlily</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kognise/water.css@latest/dist/dark.min.css">
   <script type="module" src="/dist/tigerlily.modern.js" async></script>
   <script type="module" src="/demo/js/main.js" async></script>
 </head>
 <body>
+  <pre>
+    <code>
+const persistentObject = tigerlily('jMpHXDYguqtS', {
+  defaults: {
+    someArray: [],
+    someData: {
+      name: "James"
+    }
+  }
+});
+
+tigerlily.on("*", ({prop, path, oldValue, value}) => {
+  console.log("listening to '*'", {prop, path, oldValue, value});
+});
+
+tigerlily.on("message", ({prop, path, oldValue, value}) => {
+  console.log("listening to 'message'", {prop, path, oldValue, value});
+});
+
+tigerlily.on("profile.username", ({prop, path, oldValue, value}) => {
+  console.log("listening to 'profile.username'", {prop, path, oldValue, value});
+});
+
+persistentObject.message = "hello, world!";
+persistentObject.profile = {};
+persistentObject.profile.username = "Luke";
+    </code>
+  </pre>
+  <h2>Look in the console to see the result</h2>
 </body>
 </html>
