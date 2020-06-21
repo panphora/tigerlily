@@ -29,4 +29,5 @@ console.log("Final object (stored in localStorage):\n\n" + JSON.stringify(persis
 
 
 window.tigerlily = tigerlily;
+window.persistentObject = persistentObject;
 

@@ -57,6 +57,8 @@ Define an object that will survive new page loads.
 
 Pass in a unique string to initialize it, so you can have multiple instances on the same page. If you don't pass in a unique string, you'll just be able to have a single instance.
 
+Has support for storing dates. 📅
+
 ### `on`
 
 ```javascript
