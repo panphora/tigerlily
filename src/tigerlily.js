@@ -117,7 +117,7 @@ function jsonReplacer (key, value) {
 }
 
 function jsonReviver (key, value) {
-  if (value.__isDate) {
+  if (isObjectOrArray(value) && value.__isDate) {
     return new Date(value.ms);
   }
   return value;
