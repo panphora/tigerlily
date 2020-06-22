@@ -64,6 +64,7 @@ function tigerlily (dbName, options = {}) {
         obj[prop] = value;
         localStorage.setItem(dbName, JSON.stringify(rootRef, jsonReplacer));
 
+        // deep copy the old and new value so you can compare them if they're objects
         let oldValueRef = obj[prop];
         let oldValue = isObjectOrArray(oldValueRef) ? JSON.parse(JSON.stringify(oldValueRef, jsonReplacer), jsonReviver) : oldValueRef;
         let newValue = isObjectOrArray(value) ? JSON.parse(JSON.stringify(value, jsonReplacer), jsonReviver) : value;
@@ -90,7 +91,7 @@ tigerlily.on = function (path, cb) {
 // UTILS
 
 function isObjectOrArray (val) {
-  return typeof val === 'object' && val !== null && !(val instanceof Date);
+  return Array.isArray(val) || Object.prototype.toString.call(val) === "[object Object]";
 }
 
 function getPathOfNestedObject (root, nested) {
